@@ -46,7 +46,7 @@ def commit_fraud():
 
     response = requests.post(URL, data=form_data)
     print("Sent: " + submission)
-    print(response + "\n")
+    print(str(response) + "\n")
 
 
 def main():
