@@ -49,7 +49,7 @@ def commit_fraud():
 def main():
     while True:
         commit_fraud()
-        time.sleep(5 * 60 + random.randint(0, 120))
+        time.sleep(random.randint(3*60, 6*60))
 
 
 if __name__ == "__main__":
