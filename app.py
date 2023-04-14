@@ -3,8 +3,8 @@ import time
 
 import requests
 
-MIN_SLEEP = 3 * 60
-MAX_SLEEP = 6 * 60
+MIN_SLEEP = 1 * 60
+MAX_SLEEP = 5 * 60
 
 URL = "https://docs.google.com/forms/d/e/1FAIpQLSfpDutphid_UDNqpn_dr61jYOdQhvIl_4bupW0IIzpt_MLlMw/formResponse"
 RESPONSES = (
