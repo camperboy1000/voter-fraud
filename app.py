@@ -3,6 +3,9 @@ import time
 
 import requests
 
+MIN_SLEEP = 3 * 60
+MAX_SLEEP = 6 * 60
+
 URL = "https://docs.google.com/forms/d/e/1FAIpQLSfpDutphid_UDNqpn_dr61jYOdQhvIl_4bupW0IIzpt_MLlMw/formResponse"
 RESPONSES = (
     "Arson 🔥",
@@ -34,22 +37,24 @@ def get_random_response():
 
 
 def commit_fraud():
-    response = get_random_response()
+    submission = get_random_response()
 
     form_data = {
         "entry.492815402": "__other_option__",
-        "entry.492815402.other_option_response": response
+        "entry.492815402.other_option_response": submission
     }
 
-    print(response)
     response = requests.post(URL, data=form_data)
-    print(response)
+    print("Sent: " + submission)
+    print(response + "\n")
 
 
 def main():
     while True:
         commit_fraud()
-        time.sleep(random.randint(3*60, 6*60))
+
+        sleep_time = random.randint(MIN_SLEEP, MAX_SLEEP)
+        time.sleep(sleep_time)
 
 
 if __name__ == "__main__":
