@@ -4,7 +4,7 @@ import time
 import requests
 
 MIN_SLEEP = 1 * 60
-MAX_SLEEP = 5 * 60
+MAX_SLEEP = 3 * 60
 
 URL = "https://docs.google.com/forms/d/e/1FAIpQLSfpDutphid_UDNqpn_dr61jYOdQhvIl_4bupW0IIzpt_MLlMw/formResponse"
 RESPONSES = (
@@ -27,7 +27,30 @@ RESPONSES = (
     "hewe if you want cs2 fow fwee dont s-shawe it thats n-nyot officiaw thats a-a site that e-expwoits steam t-to get the cs2 beta b-but it wowks b-but you nyeed pwime f-fow that and dont shawe it k thanks bye",
     "NOOOOO, YOU CANT JUST SCRRENSHOT AN NFT",
     "This NFT goes hard, feel free to screenshot",
-    "NNOOOO, YOU CANT JUST PRINT MONEY, HAHA MONEY PRINTER GO BRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+    "NNOOOO, YOU CANT JUST PRINT MONEY, HAHA MONEY PRINTER GO BRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+    "*Discord ping intensifies*",
+    "Deez Nutz 🥜",
+    "HA GOTTEEM",
+    "DO IT FOR THE VINE!",
+    "DO IT FOR THE BIT!",
+    "freshavacado",
+    "freeshavacado",
+    "WHAT ARE THOSE!",
+    "cum",
+    "*Slack brush sweep sound intensifies*",
+    "Ted Kaczynski",
+    "Blueberry bagels",
+    "Sesame bagles",
+    "Cringle my Pringle",
+    "Weggle my Eggle",
+    "It would be highly illegal to say that I want to [REDACTED]",
+    "Gollosano",
+    "https://www.rochesterapex.com/",
+    "I use Arch btw",
+    "🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡🤡",
+    "https://youtu.be/dQw4w9WgXcQ",
+    "https://youtu.be/bZe5J8SVCYQ",
+    "https://youtu.be/bzJDimvPW1Y"
 )
 
 
