@@ -1,13 +1,13 @@
-import random
-import time
+use std::{collections::BTreeMap, thread::sleep, time::Duration};
 
-import requests
+use rand::prelude::*;
+use reqwest::Client;
 
-MIN_SLEEP = 1 * 60
-MAX_SLEEP = 3 * 60
+const MIN_SLEEP: u64 = 1 * 60;
+const MAX_SLEEP: u64 = 3 * 60;
 
-URL = "https://docs.google.com/forms/d/e/1FAIpQLSfpDutphid_UDNqpn_dr61jYOdQhvIl_4bupW0IIzpt_MLlMw/formResponse"
-RESPONSES = (
+const URL: &str = "https://docs.google.com/forms/d/e/1FAIpQLSfpDutphid_UDNqpn_dr61jYOdQhvIl_4bupW0IIzpt_MLlMw/formResponse";
+const RESPONSES: [&str; 66] = [
     "Arson 🔥",
     "War Crimes",
     "Joseph Evals Mama Thomas Abbate III",
@@ -53,6 +53,7 @@ RESPONSES = (
     "https://youtu.be/bzJDimvPW1Y",
     "What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the Internet? Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You're fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that's just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little \"clever\" comment was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn't, you didn't, and now you're paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo.",
     "Just rewrite it in Rust 🦀🦀🦀🦀🦀",
+    "I rewrote this script in Rust 🦀🦀🦀🦀🦀",
     "Joe Bidome",
     "Obama Prism",
     "Donald Trumpet",
@@ -73,34 +74,34 @@ RESPONSES = (
     "So I (74M) was recently hit by a car (2014 Honda) and died. My wife (5F) organized me a funeral (cost $2747) without asking me (74M) at all. I (74M) was unable to make it because I (74M) was dead (17 days). At the funeral I heard my dad (15M) and other family members talking about how they wish I could be there and now I feel bad for not showing up. AITA?",
     "\"YoU tOucHEd ThAt BlOcK So yOu HavE tO PuLl tHat OnE Out\" Go fuck yourself, that’s not how the fucking game is played, you dumb, the fuck, asshole. Quoted from the official Jenga rules: \"Players may tap a block to find a loose one. Any blocks moved but not played should be replaced, unless doing so would make the tower fall.\" You’ve never even fucking read the rules have you, you shithead idiot. What, is the game over in 3 seconds, if you just so happen to touch a load bearing block first?FUCKING NO DUMBASS. Learn to read you illiterate fuck.",
     "I sexually Identify as the \"I sexually identify as an attack helicopter\" joke. Ever since I was a child, I've dreamed of flippantly dismissing any concepts or discussions regarding gender that don't fit in with what I learned in 8th grade bio. People say to me that this joke hasn't been funny since 2014 and please at least come up with a new one, but I don't care, I'm hilarious. I'm having a plastic surgeon install Ctrl, C, and V keys on my body. From now on I want you guys to call me \"epic kek dank meme trannies owned with facts and logic\" and respect my right to shit up social media. If you can't accept me you're a memeophobe and need to check your ability-to-critically-think privilege. Thank you for being so understanding."
-)
+];
 
+fn get_random_reponse() -> &'static str {
+    RESPONSES.choose(&mut thread_rng()).unwrap()
+}
 
-def get_random_response():
-    index = random.randint(0, len(RESPONSES))
-    return RESPONSES[index]
+async fn commit_fraud() {
+    let response = get_random_reponse();
 
+    let mut form_submission = BTreeMap::new();
+    form_submission.insert("entry.492815402", "__other_option__");
+    form_submission.insert("entry.492815402.other_option_response", response);
 
-def commit_fraud():
-    submission = get_random_response()
+    println!("Sending: {response}");
+    match Client::new().post(URL).form(&form_submission).send().await {
+        Ok(response) => println!("Status: {:?}\n", response.status()),
+        Err(err) => println!("Status: {:?}\n{}\n", err.status(), err),
+    };
+}
 
-    form_data = {
-        "entry.492815402": "__other_option__",
-        "entry.492815402.other_option_response": submission
+#[tokio::main]
+async fn main() {
+    let mut random_source = thread_rng();
+
+    loop {
+        commit_fraud().await;
+
+        let sleep_duration = random_source.gen_range(MIN_SLEEP..=MAX_SLEEP);
+        sleep(Duration::from_secs(sleep_duration));
     }
-
-    response = requests.post(URL, data=form_data)
-    print("Sent: " + submission)
-    print(str(response) + "\n")
-
-
-def main():
-    while True:
-        commit_fraud()
-
-        sleep_time = random.randint(MIN_SLEEP, MAX_SLEEP)
-        time.sleep(sleep_time)
-
-
-if __name__ == "__main__":
-    main()
+}
