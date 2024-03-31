@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, thread::sleep, time::Duration};
+use std::{collections::HashMap, thread::sleep, time::Duration};
 
 use futures::executor::block_on;
 use rand::prelude::*;
@@ -88,7 +88,7 @@ fn get_random_reponse(random_source: &mut dyn RngCore) -> &'static str {
 async fn commit_fraud(random_source: &mut dyn RngCore) {
     let response = get_random_reponse(random_source);
 
-    let mut form_submission = BTreeMap::new();
+    let mut form_submission = HashMap::new();
     form_submission.insert("entry.492815402", "__other_option__");
     form_submission.insert("entry.492815402.other_option_response", response);
 
