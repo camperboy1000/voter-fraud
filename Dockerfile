@@ -5,6 +5,6 @@ COPY . .
 RUN cargo install --path .
 
 FROM docker.io/debian:bookworm
-RUN apt-get update && apt-get install -y openssl pkg-config && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libssl3 pkg-config && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/local/cargo/bin/voter-fraud /usr/local/bin/voter-fraud
 CMD [ "voter-fraud" ]
