@@ -1,6 +1,6 @@
 FROM docker.io/rust:bookworm AS builder
 WORKDIR /usr/src/voter-fraud
-RUN apt update && apt install -y openssl-dev pkg-config && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y libssl-dev pkg-config && rm -rf /var/lib/apt/lists/*
 COPY . .
 RUN cargo install --path .
 
