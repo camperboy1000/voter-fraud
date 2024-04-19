@@ -1,13 +1,13 @@
-use std::{collections::HashMap, thread::sleep, time::Duration};
+use std::{collections::HashMap, ops::RangeInclusive, thread::sleep, time::Duration};
 
-use futures::executor::block_on;
 use rand::prelude::*;
 use reqwest::Client;
 
 const MIN_SLEEP: u64 = 1 * 60; // 1 minute
 const MAX_SLEEP: u64 = 3 * 60; // 3 minutes
 
-const URL: &str = "https://docs.google.com/forms/d/e/1FAIpQLSfpDutphid_UDNqpn_dr61jYOdQhvIl_4bupW0IIzpt_MLlMw/formResponse";
+const URL: &str =    "https://docs.google.com/forms/d/e/1FAIpQLSeoXhwL7aF7yLj-wR37r8JZtOlzmmJchTarlLcl1LicYCNuMg/formResponse"        ;
+const ROBOT_RANGE: RangeInclusive<u16> = 0..=1000;
 const RESPONSES: [&str; 70] = [
     "Arson 🔥",
     "War Crimes",
@@ -16,7 +16,7 @@ const RESPONSES: [&str; 70] = [
     "I forgor 💀",
     "What's voter fraud?",
     "💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀",
-    "FREEEEEEEEE BIRRRRRRRRRRRRRRD 🦅",
+    "FREEEEEEEEE BIRRRRRRRRRRRRRRD 🇺🇸🦅",
     "Hi, we are calling you about you're cars extended warrenty",
     "hiwearecallingyouaboutyourecarsextendedwarrenty",
     "I am once again asking for your financial support",
@@ -86,24 +86,34 @@ fn get_random_reponse(random_source: &mut dyn RngCore) -> &'static str {
 }
 
 async fn commit_fraud(random_source: &mut dyn RngCore) {
+    let mut form_submission: HashMap<&str, &str> = HashMap::new();
+
+    let name = format!("Robot {}", random_source.gen_range(ROBOT_RANGE).to_string());
     let response = get_random_reponse(random_source);
+    let best_bird = format!("Option {}", random_source.gen_range(1..=4).to_string());
 
-    let mut form_submission = HashMap::new();
-    form_submission.insert("entry.492815402", "__other_option__");
-    form_submission.insert("entry.492815402.other_option_response", response);
+    form_submission.insert("entry.746961800", &name);
+    form_submission.insert("entry.1385752702", "__other_option__");
+    form_submission.insert("entry.1385752702.other_option_response", &response);
+    form_submission.insert("entry.41364184", &best_bird);
 
-    println!("Sending: {response}");
+    println!(
+        "Sending:\n\tName: {}\n\tResponse: {}\n\tBest Bird: {}",
+        &name, &response, &best_bird
+    );
+
     match Client::new().post(URL).form(&form_submission).send().await {
         Ok(response) => println!("Status: {:?}\n", response.status()),
         Err(err) => println!("Status: {:?}\n{}\n", err.status(), err),
     };
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let mut random_source = thread_rng();
 
     loop {
-        block_on(commit_fraud(&mut random_source));
+        commit_fraud(&mut random_source).await;
 
         let sleep_duration = random_source.gen_range(MIN_SLEEP..=MAX_SLEEP);
         sleep(Duration::from_secs(sleep_duration));

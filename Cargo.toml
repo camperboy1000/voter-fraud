@@ -8,4 +8,4 @@ edition = "2021"
 [dependencies]
 rand = "0.8"
 reqwest = "0.12"
-futures = "0.3"
+tokio = { version = "1.37", features = ["macros", "rt-multi-thread"] }
