@@ -1,4 +1,4 @@
-FROM docker.io/rust:bullseye
+FROM docker.io/rust:bookworm
 
 WORKDIR /usr/src/voter-fraud
 COPY . .
