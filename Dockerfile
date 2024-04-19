@@ -1,10 +1,10 @@
-FROM docker.io/rust:alpine AS builder
+FROM docker.io/rust:bookworm AS builder
 WORKDIR /usr/src/voter-fraud
-RUN apk add openssl-dev pkgconf
+RUN apt update && apt install -y openssl-dev pkg-config && rm -rf /var/lib/apt/lists/*
 COPY . .
 RUN cargo install --path .
 
-FROM alpine:3.19
-RUN apk add openssl
+FROM debian:bookworm
+RUN apt update && apt install -y openssl && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/local/cargo/bin/voter-fraud /usr/local/bin/voter-fraud
 CMD [ "voter-fraud" ]
